@@ -24,7 +24,7 @@ public class RestaurantController : Controller
     {
         if (!ModelState.IsValid)
             return View(model);
-        
+
         await _service.CreateRestaurantAsync(model);
 
         return RedirectToAction(nameof(Index));
@@ -54,15 +54,14 @@ public class RestaurantController : Controller
         RestaurantDetail? restaurant = await _service.GetRestaurantAsync(id);
         if (restaurant is null)
             return NotFound();
-    
-    RestaurantEdit model = new()
-    {
-        Id = restaurant.Id,
-        Name = restaurant.Name ?? "",
-        Location = restaurant.Location ?? ""
-    };
 
-    return View(model);
+        RestaurantEdit model = new()
+        {
+            Id = restaurant.Id,
+            Name = restaurant.Name ?? "",
+            Location = restaurant.Location ?? ""
+        };
+        return View(model);
     }
 
     [HttpPost]
@@ -72,10 +71,27 @@ public class RestaurantController : Controller
             return View(model);
 
         if (await _service.UpdateRestaurantAsync(model))
-            return RedirectToAction(nameof(Details), new {id = id});
+            return RedirectToAction(nameof(Details), new { id = id });
 
         ModelState.AddModelError("Save Error", "Could not update the Restaurant. Please try again.");
         return View(model);
     }
 
+    [HttpGet]
+    public async Task<IActionResult> Delete(int id)
+    {
+        RestaurantDetail? restaurant = await _service.GetRestaurantAsync(id);
+        if (restaurant is null)
+            return RedirectToAction(nameof(Index));
+
+        return View(restaurant);
+    }
+
+    [HttpPost]
+    [ActionName(nameof(Delete))]
+    public async Task<IActionResult> ConfirmDelete(int id)
+    {
+        await _service.DeleteRestaurantAsync(id);
+        return RedirectToAction(nameof(Index));
+    }
 }
