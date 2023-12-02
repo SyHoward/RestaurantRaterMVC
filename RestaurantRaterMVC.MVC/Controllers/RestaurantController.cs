@@ -36,6 +36,15 @@ public class RestaurantController : Controller
         return View(restaurants);
     }
 
-    
+    [HttpGet]
+    public async Task<IActionResult> Details(int id)
+    {
+        RestaurantDetail? model = await _service.GetRestaurantAsync(id);
+
+        if (model is null)
+            return NotFound();
+
+        return View(model);
+    }
 
 }
