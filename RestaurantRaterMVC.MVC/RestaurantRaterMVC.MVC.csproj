@@ -4,6 +4,7 @@
     <ProjectReference Include="..\RestaurantRaterMVC.Models\RestaurantRaterMVC.Models.csproj" />
     <ProjectReference Include="..\RestaurantRaterMVC.Services\RestaurantRaterMVC.Services.csproj" />
     <ProjectReference Include="..\RestaurantRaterMVC.Data\RestaurantRaterMVC.Data.csproj" />
+    <ProjectReference Include="..\RestaurantRaterMVC.ViewComponents\RestaurantRaterMVC.ViewComponents.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
