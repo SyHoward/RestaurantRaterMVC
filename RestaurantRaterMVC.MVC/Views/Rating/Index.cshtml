@@ -1,24 +1,34 @@
 @model List<RatingListItem>
 @{
-    ViewData["Title"] = "Ratings";
+    ViewData["Title"] = "Rating Index";
 }
 
 <h1>Restaurant Ratings</h1>
 
 <table class="table">
-    <tr>
-        <th>Restaurant</th>
-        <th>Rating</th>
-    </tr>
-    @foreach (var item in Model)
-    {
+    <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(_ => item.RestaurantName)
-            </td>
-            <td>
-                @Html.DisplayFor(_ => item.Score)
-            </td>
+            <th>Restaurant</th>
+            <th>Rating</th>
         </tr>
-    }
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(_ => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(_ => item.RestaurantName)
+                </td>
+                <td>
+                    @Html.DisplayFor(_ => item.Score)
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>

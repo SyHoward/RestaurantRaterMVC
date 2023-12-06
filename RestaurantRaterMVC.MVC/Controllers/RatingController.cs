@@ -36,5 +36,23 @@ public class RatingController : Controller
         await _service.CreateRatingAsync(model);
         return RedirectToAction("Details", "Restaurant", new { id = model.RestaurantId });
     }
-    
+
+    [HttpGet]
+    public async Task<IActionResult> Delete(int id)
+    {
+        RatingDetail? rating = await _service.GetRatingByIdAsync(id);
+        if (rating is null)
+            return RedirectToAction(nameof(Index));
+
+        return View(rating);
+    }
+
+    [HttpPost]
+    [ActionName(nameof(Delete))]
+    public async Task<IActionResult> ConfirmDelete(int id)
+    {
+        await _service.DeleteRatingAsync(id);
+        return RedirectToAction(nameof(Index));
+    }
+
 }

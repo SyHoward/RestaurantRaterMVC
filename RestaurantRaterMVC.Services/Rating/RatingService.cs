@@ -54,4 +54,31 @@ public class RatingService : IRatingService
         
         return ratings;
     }
+
+            public async Task<RatingDetail?> GetRatingByIdAsync(int id)
+        {
+            RatingEntity? rating = await _context.Ratings
+                .FirstOrDefaultAsync(r => r.Id == id);
+
+            return rating is null ? null : new()
+            {
+                Id = rating.Id,
+                Score = rating.Score
+            };
+        }
+
+    public async Task<bool> DeleteRatingAsync(int id)
+    {
+        RatingEntity? entity = await _context.Ratings.FindAsync(id);
+        if (entity is null)
+            return false;
+
+        // var ratings = await _context.Ratings.Where(r => r.Id == entity.Id).ToListAsync();
+        // _context.Ratings.RemoveRange(ratings);
+        // await _context.SaveChangesAsync();
+
+        _context.Ratings.Remove(entity);
+        return await _context.SaveChangesAsync() == 1;
+    }
+
 }
