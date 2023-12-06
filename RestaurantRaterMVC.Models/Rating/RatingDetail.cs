@@ -2,18 +2,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace RestaurantRaterMVC.Models.Rating;
 
-public class RatingListItem
+public class RatingDetail
 {
     public int Id {get; set;}
 
     [Display(Name = "Restaurant")]
-    public string? RestaurantName {get; set;}
+    public string? RestaurantName { get; set; }
 
     [Display(Name = "Rating")]
     public double Score {get; set;}
-
-    public static implicit operator RatingListItem(List<RatingListItem> v)
-    {
-        throw new NotImplementedException();
-    }
 }
